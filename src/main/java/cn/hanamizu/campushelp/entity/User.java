@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
 @ToString
 @Data
 @TableName(resultMap = "userResultMap")
+@Alias("User")
 public class User {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -27,10 +29,10 @@ public class User {
     private Double balance;
     private Integer state;
 
-//    @TableField(exist = false)
-//    private School school;
-//    @TableField(exist = false)
-//    private Dept dept;
-//    @TableField(exist = false)
-//    private Class aClass;
+    @TableField(exist = false)
+    private School school;
+    @TableField(exist = false)
+    private Dept dept;
+    @TableField(exist = false)
+    private Class aClass;
 }

@@ -8,5 +8,4 @@ spring:
 logging:
   level:
     cn.hanamizu.campushelp.mapper: debug
-mybatis-plus:
-  mapper-locations: classpath:mappers/*.xml
+
