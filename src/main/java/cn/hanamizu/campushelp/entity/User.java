@@ -27,10 +27,10 @@ public class User {
     private Double balance;
     private Integer state;
 
-    @TableField(exist = false)
-    private School school;
-    @TableField(exist = false)
-    private Dept dept;
-    @TableField(exist = false)
-    private Class aClass;
+//    @TableField(exist = false)
+//    private School school;
+//    @TableField(exist = false)
+//    private Dept dept;
+//    @TableField(exist = false)
+//    private Class aClass;
 }

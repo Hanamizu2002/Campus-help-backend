@@ -4,17 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hanamizu.campushelp.mapper.UserMapper">
 
-    <resultMap id="classResultMap" type="cn.hanamizu.campushelp.entity.Class">
+    <resultMap id="userResultMap" type="cn.hanamizu.campushelp.entity.User">
         <id column="id" property="id"/>
-        <collection property="users" column="id" ofType="cn.hanamizu.campushelp.entity.User"
-                    select="findUserByClassId"/>
+        <association property="school" column="school_id" select="findEntitySchoolById"/>
+        <association property="dept" column="dept_id" select="findEntityDeptById"/>
+        <association property="aClass" column="class_id" select="findEntityClassById"/>
     </resultMap>
 
-
-    <select id="findUserByClassId" resultMap="cn.hanamizu.campushelp.mapper.UserMapper.userResultMap">
+    <select id="findEntitySchoolById" resultType="cn.hanamizu.campushelp.entity.School">
         select *
-        from user
-        where class_id = #{id}
+        from school
+        where id = #{id}
+    </select>
+
+    <select id="findEntityDeptById" resultType="cn.hanamizu.campushelp.entity.Dept">
+        select *
+        from dept
+        where id = #{id}
+    </select>
+
+    <select id="findEntityClassById" resultType="cn.hanamizu.campushelp.entity.Class">
+        select *
+        from class
+        where id = #{id}
     </select>
 
 </mapper>

@@ -1,6 +1,12 @@
 spring:
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.31.5:3306/campus_help
     username: root
     password: root
+logging:
+  level:
+    cn.hanamizu.campushelp.mapper: debug
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
