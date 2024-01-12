@@ -37,6 +37,7 @@ public class UserController {
         }
         List<User> users = userService.list();
         return messageUtil.message(true, "success", "user", users);
+//        return messageUtil.message(false, "error");
     }
 
     @GetMapping("/{id}")

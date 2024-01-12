@@ -6,12 +6,15 @@
 
     <resultMap id="classResultMap" type="cn.hanamizu.campushelp.entity.Class">
         <id column="id" property="id"/>
-        <collection property="users" column="id" ofType="cn.hanamizu.campushelp.entity.User" select="findUserByClassId"/>
+        <collection property="users" column="id" ofType="cn.hanamizu.campushelp.entity.User"
+                    select="findUserByClassId"/>
     </resultMap>
 
 
     <select id="findUserByClassId" resultMap="cn.hanamizu.campushelp.mapper.UserMapper.userResultMap">
-        select * from user where class_id=#{id}
+        select *
+        from user
+        where class_id = #{id}
     </select>
 
 </mapper>

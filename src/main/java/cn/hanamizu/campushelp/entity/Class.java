@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @TableName(resultMap = "classResultMap")
 public class Class {
-    @TableId(value = "id",type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private String name;
     private Integer schoolId;

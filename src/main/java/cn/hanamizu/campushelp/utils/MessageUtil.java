@@ -16,4 +16,10 @@ public class MessageUtil {
         }
         return map;
     }
+    public Map<String, Object> message(boolean status, String msg) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", status);
+        map.put("msg", msg);
+        return map;
+    }
 }

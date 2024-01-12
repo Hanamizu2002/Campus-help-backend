@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.31.5:3306/campus_help
+    url: jdbc:mysql://192.168.31.5:3306/campus_help?characterEcoding=utf-8&serverTimezone=UTC&useSSL=false
     username: root
     password: root
 logging:
