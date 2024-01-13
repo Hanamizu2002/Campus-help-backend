@@ -5,11 +5,9 @@ import cn.hanamizu.campushelp.service.UserService;
 import cn.hanamizu.campushelp.utils.MessageUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +19,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //TODO 登录
+    // 登录检查
+    @GetMapping("/login")
+    public Map<String, Object> checkUserLogin(User checkUser, HttpSession session) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("student_id", checkUser.getStudentId())
+                .eq("password", checkUser.getPassword())
+                .eq("school_id", checkUser.getSchoolId());
+        User user = userService.getOne(wrapper);
+
+        if (user != null) {
+            session.setAttribute("user", user);
+            return messageUtil.message(true, "success", "user", user);
+        }
+        return messageUtil.message(false, "login failed");
+    }
 
     //获取user列表
     @GetMapping("/getUsers")
@@ -47,8 +59,37 @@ public class UserController {
     }
 
     //更新user信息
+    @PutMapping("/update")
+    public Map<String, Object> putUser(User user) {
+        boolean update = userService.updateById(user);
+        if (update) {
+            return messageUtil.message(true, "success", "", null);
+        }
+        return messageUtil.message(false, "update failed", "", null);
+    }
 
     //添加user
+    @PostMapping("/add")
+    public Map<String, Object> saveUser(User user) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("school_id", user.getSchoolId())
+                .eq("student_id", user.getStudentId());
+        User one = userService.getOne(wrapper);
+        if (one == null) {
+            userService.save(user);
+            return messageUtil.message(true, "success", "", null);
+        }
+        return messageUtil.message(false, "add failed", "", null);
+    }
 
     //删除
+    @DeleteMapping("/delete")
+    public Map<String, Object> delUser(@PathVariable Long id) {
+        boolean remove = userService.removeById(id);
+        if (remove) {
+            return messageUtil.message(true, "success", "", null);
+        }
+        return messageUtil.message(false, "delete failed", "", null);
+    }
+
 }
