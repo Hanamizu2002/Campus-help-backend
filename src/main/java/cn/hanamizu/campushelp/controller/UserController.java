@@ -3,6 +3,7 @@ package cn.hanamizu.campushelp.controller;
 import cn.hanamizu.campushelp.entity.User;
 import cn.hanamizu.campushelp.service.UserService;
 import cn.hanamizu.campushelp.utils.MessageUtil;
+import cn.hanamizu.campushelp.utils.PocketMoney;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,13 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
+    private UserService userService;
+    @Autowired
     private MessageUtil messageUtil;
     @Autowired
-    private UserService userService;
+    private PocketMoney money;
 
-    // 登录检查
+    // 检查登录
     @GetMapping("/login")
     public Map<String, Object> checkUserLogin(User checkUser, HttpSession session) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -32,12 +35,12 @@ public class UserController {
             session.setAttribute("user", user);
             return messageUtil.message(true, "success", "user", user);
         }
-        return messageUtil.message(false, "login failed");
+        return messageUtil.message(false, "login failed", "", null);
     }
 
-    //获取user列表
+    // 获取全部User
     @GetMapping("/getUsers")
-    public Map<String, Object> getUsers(String studentId, String username) {
+    public Map<String, Object> users(String studentId, String username) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         if (studentId != null) {
             wrapper.eq("student_id", studentId);
@@ -49,27 +52,17 @@ public class UserController {
         }
         List<User> users = userService.list();
         return messageUtil.message(true, "success", "user", users);
-//        return messageUtil.message(false, "error");
     }
 
+    // 根据id获取User
     @GetMapping("/{id}")
     public Map<String, Object> user(@PathVariable String id) {
         User user = userService.getById(id);
         return messageUtil.message(true, "success", "user", user);
     }
 
-    //更新user信息
-    @PutMapping("/update")
-    public Map<String, Object> putUser(User user) {
-        boolean update = userService.updateById(user);
-        if (update) {
-            return messageUtil.message(true, "success", "", null);
-        }
-        return messageUtil.message(false, "update failed", "", null);
-    }
-
-    //添加user
-    @PostMapping("/add")
+    // 添加User
+    @PostMapping
     public Map<String, Object> saveUser(User user) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("school_id", user.getSchoolId())
@@ -79,17 +72,38 @@ public class UserController {
             userService.save(user);
             return messageUtil.message(true, "success", "", null);
         }
-        return messageUtil.message(false, "add failed", "", null);
+        return messageUtil.message(false, "update failed", "", null);
     }
 
-    //删除
-    @DeleteMapping("/delete")
+    // 更新信息
+    @PutMapping
+    public Map<String, Object> putUser(User user) {
+        boolean update = userService.updateById(user);
+        if (update) {
+            return messageUtil.message(true, "success", "", null);
+        }
+        return messageUtil.message(false, "error", "", null);
+    }
+
+    // 删除学生
+    @DeleteMapping("/{id}")
     public Map<String, Object> delUser(@PathVariable Long id) {
         boolean remove = userService.removeById(id);
         if (remove) {
             return messageUtil.message(true, "success", "", null);
         }
-        return messageUtil.message(false, "delete failed", "", null);
+        return messageUtil.message(false, "error", "", null);
     }
 
+    // 零钱转入
+    @PutMapping("rollIn")
+    public Map<String, Object> rollIn(String studentId, Double balance) {
+        return money.transfer("balance=balance+", balance, studentId);
+    }
+
+    // 零钱转出
+    @PutMapping("rollOut")
+    public Map<String, Object> rollOut(String studentId, Double balance) {
+        return money.transfer("balance=balance-", balance, studentId);
+    }
 }
