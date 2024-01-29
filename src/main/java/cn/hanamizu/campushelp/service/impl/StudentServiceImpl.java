@@ -31,41 +31,45 @@ public class StudentServiceImpl implements StudentService {
 
     /**
      * TODO 添加学生管理
+     *
      * @param student 学生管理
-     * @return
+     * @return 结果
      */
     @Override
-    public int insertStudent(Student student) {
-        return 0;
+    public boolean insertStudent(Student student) {
+        return false;
     }
 
     /**
      * TODO 修改学生管理
+     *
      * @param student 学生管理
-     * @return
+     * @return 结果
      */
     @Override
-    public int updateStudent(Student student) {
-        return 0;
+    public boolean updateStudent(Student student) {
+        return false;
     }
 
     /**
      * TODO 批量删除学生管理
+     *
      * @param ids 需要删除的学生管理主键集合
-     * @return
+     * @return 结果
      */
     @Override
-    public int deleteStudentByIds(Long[] ids) {
-        return 0;
+    public boolean deleteStudentByIds(Long[] ids) {
+        return false;
     }
 
     /**
      * TODO 通过id删除学生管理
+     *
      * @param id 学生管理主键
-     * @return
+     * @return 结果
      */
     @Override
-    public int deleteSxcStudentById(Long id) {
-        return 0;
+    public boolean deleteSxcStudentById(Long id) {
+        return false;
     }
 }

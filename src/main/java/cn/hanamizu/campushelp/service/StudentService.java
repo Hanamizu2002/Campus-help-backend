@@ -27,7 +27,7 @@ public interface StudentService {
      * @param student 学生管理
      * @return 结果
      */
-    int insertStudent(Student student);
+    boolean insertStudent(Student student);
 
     /**
      * 修改学生管理
@@ -35,7 +35,7 @@ public interface StudentService {
      * @param student 学生管理
      * @return 结果
      */
-    int updateStudent(Student student);
+    boolean updateStudent(Student student);
 
     /**
      * 批量删除学生管理
@@ -43,7 +43,7 @@ public interface StudentService {
      * @param ids 需要删除的学生管理主键集合
      * @return 结果
      */
-    int deleteStudentByIds(Long[] ids);
+    boolean deleteStudentByIds(Long[] ids);
 
     /**
      * 删除学生管理信息
@@ -51,5 +51,5 @@ public interface StudentService {
      * @param id 学生管理主键
      * @return 结果
      */
-    int deleteSxcStudentById(Long id);
+    boolean deleteSxcStudentById(Long id);
 }
