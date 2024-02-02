@@ -23,7 +23,7 @@ public class UserController {
     private PocketMoney money;
 
     // 检查登录
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Map<String, Object> checkUserLogin(User checkUser, HttpSession session) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("student_id", checkUser.getStudentId())
@@ -33,7 +33,7 @@ public class UserController {
 
         if (user != null) {
             session.setAttribute("user", user);
-            return messageUtil.message(true, "success", "user", user);
+            return messageUtil.message(true, "登录成功", "user", user);
         }
         return messageUtil.message(false, "login failed", "", null);
     }
@@ -70,7 +70,7 @@ public class UserController {
         User one = userService.getOne(wrapper);
         if (one == null) {
             userService.save(user);
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "add success", "", null);
         }
         return messageUtil.message(false, "update failed", "", null);
     }
@@ -80,7 +80,7 @@ public class UserController {
     public Map<String, Object> putUser(User user) {
         boolean update = userService.updateById(user);
         if (update) {
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "update success", "", null);
         }
         return messageUtil.message(false, "error", "", null);
     }
@@ -90,7 +90,7 @@ public class UserController {
     public Map<String, Object> delUser(@PathVariable Long id) {
         boolean remove = userService.removeById(id);
         if (remove) {
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "remove success", "", null);
         }
         return messageUtil.message(false, "error", "", null);
     }

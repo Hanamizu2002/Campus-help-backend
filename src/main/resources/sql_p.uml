@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.remark</OriginalElement>
+  <nodes>
+    <node x="225.125" y="317.5">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.student</node>
+    <node x="44.22467320261438" y="484.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.user</node>
+    <node x="770.125" y="21.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.notice</node>
+    <node x="-96.5" y="306.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.class</node>
+    <node x="474.125" y="21.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.admin</node>
+    <node x="-2.4481209150326606" y="1179.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.remark</node>
+    <node x="-11.875" y="151.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.dept</node>
+    <node x="-98.76062091503269" y="21.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.school</node>
+    <node x="21.12500000000003" y="844.0">c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.task</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.user" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.school" relationship="REFERENCES">
+      <point x="31.375" y="-154.0" />
+      <point x="201.09967320261438" y="457.0" />
+      <point x="214.625" y="457.0" />
+      <point x="214.625" y="130.0" />
+      <point x="99.36437908496731" y="130.0" />
+      <point x="99.36437908496731" y="120.0" />
+      <point x="63.23937908496731" y="120.0" />
+      <point x="54.0" y="39.0" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.user" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.student" relationship="REFERENCES">
+      <point x="94.125" y="-154.0" />
+      <point x="263.8496732026144" y="457.0" />
+      <point x="327.125" y="457.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.task" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.user" relationship="REFERENCES">
+      <point x="-2.8421709430404007E-14" y="-142.5" />
+      <point x="157.625" y="818.0" />
+      <point x="106.97467320261438" y="818.0" />
+      <point x="-62.75" y="154.0" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.dept" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.school" relationship="REFERENCES">
+      <point x="0.0" y="-50.5" />
+      <point x="96.125" y="130.0" />
+      <point x="99.36437908496731" y="130.0" />
+      <point x="99.36437908496731" y="120.0" />
+      <point x="63.23937908496731" y="120.0" />
+      <point x="54.0" y="39.0" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.class" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.school" relationship="REFERENCES">
+      <point x="-51.25" y="-62.0" />
+      <point x="-45.25" y="279.0" />
+      <point x="-22.375" y="279.0" />
+      <point x="-22.375" y="130.0" />
+      <point x="99.36437908496731" y="130.0" />
+      <point x="99.36437908496731" y="120.0" />
+      <point x="63.23937908496731" y="120.0" />
+      <point x="54.0" y="39.0" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.remark" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.task" relationship="REFERENCES">
+      <point x="-74.33333333333331" y="-85.0" />
+      <point x="34.718545751634025" y="1154.0" />
+      <point x="66.625" y="1154.0" />
+      <point x="-91.0" y="142.5" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.user" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.dept" relationship="REFERENCES">
+      <point x="-31.375" y="-154.0" />
+      <point x="138.34967320261438" y="457.0" />
+      <point x="119.0" y="457.0" />
+      <point x="119.0" y="279.0" />
+      <point x="96.125" y="279.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.user" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.class" relationship="REFERENCES">
+      <point x="-94.125" y="-154.0" />
+      <point x="75.59967320261438" y="457.0" />
+      <point x="6.0" y="457.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.task" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.school" relationship="REFERENCES">
+      <point x="-91.00000000000003" y="-142.5" />
+      <point x="66.625" y="818.0" />
+      <point x="-107.00000000000003" y="818.0" />
+      <point x="-107.00000000000003" y="130.0" />
+      <point x="-44.76062091503269" y="130.0" />
+      <point x="-54.0" y="39.0" />
+    </edge>
+    <edge source="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.class" target="c3879595-6014-418f-90a6-cf0b0afdc0a7.TABLE:campus_help.dept" relationship="REFERENCES">
+      <point x="51.25" y="-62.0" />
+      <point x="57.25" y="279.0" />
+      <point x="96.125" y="279.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+  </edges>
+  <settings layout="分层" zoom="0.5682492581602374" showDependencies="false" x="461.5" y="695.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>列</Category>
+    <Category>注释</Category>
+    <Category>虚拟外键</Category>
+    <Category>键列</Category>
+  </Categories>
+</Diagram>
+

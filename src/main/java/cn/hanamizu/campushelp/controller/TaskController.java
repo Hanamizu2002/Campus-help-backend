@@ -64,7 +64,7 @@ public class TaskController {
 
     // 获取发布和接受的task
     public List<Task> publishAndAcceptMethods(Long id, String field) {
-        // User user = (User) session.getAttribute("user");
+//         User user = (User) session.getAttribute("user");
         QueryWrapper<Task> wrapper = new QueryWrapper<>();
         wrapper.eq(field, id);
         return taskService.list(wrapper);
@@ -74,12 +74,15 @@ public class TaskController {
     @PostMapping
     public Map<String, Object> saveTask(Task task) {
         User user = userService.getById(task.getPublishId());
+//        // test 临时数据
+//        User user = userService.getById(13);
+
         if (user.getBalance() >= task.getReward()) {
             boolean save = taskService.save(task);
             if (save) {
                 money.transfer("balance=balance-", task.getReward(), user.getStudentId());
             }
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "发布成功", "", null);
         } else {
             return messageUtil.message(false, "error", "", null);
         }
@@ -94,7 +97,7 @@ public class TaskController {
             taskService.removeById(id);
             money.transfer("balance=balance+", task.getReward(), task.getPublish().getStudentId());
         }
-        return messageUtil.message(true, "success", "", null);
+        return messageUtil.message(true, "取消成功", "", null);
     }
 
     // 接单人取消task
@@ -111,7 +114,7 @@ public class TaskController {
 
 
         if (update) {
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "取消成功", "", null);
         }
         return messageUtil.message(false, "failed", "", null);
     }
@@ -128,7 +131,7 @@ public class TaskController {
         boolean b = taskService.update(wrapper);
 
         if (b) {
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "接受成功", "", null);
         }
         return messageUtil.message(false, "failed", "", null);
     }
@@ -148,7 +151,7 @@ public class TaskController {
             if (task != null) {
                 money.transfer("balance=balance+", task.getReward(), task.getAccept().getStudentId());
             }
-            return messageUtil.message(true, "success", "", null);
+            return messageUtil.message(true, "完成任务", "", null);
         }
         return messageUtil.message(false, "failed", "", null);
     }
@@ -167,7 +170,7 @@ public class TaskController {
             boolean update = taskService.updateById(task);
 
             if (update) {
-                return messageUtil.message(true, "success", "", null);
+                return messageUtil.message(true, "修改成功", "", null);
             }
             return messageUtil.message(false, "failed", "", null);
         }
