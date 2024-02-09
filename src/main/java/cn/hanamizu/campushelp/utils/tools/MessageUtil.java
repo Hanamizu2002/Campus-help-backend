@@ -1,4 +1,4 @@
-package cn.hanamizu.campushelp.utils;
+package cn.hanamizu.campushelp.utils.tools;
 
 import org.springframework.stereotype.Component;
 

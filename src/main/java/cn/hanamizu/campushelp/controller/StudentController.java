@@ -2,7 +2,7 @@ package cn.hanamizu.campushelp.controller;
 
 import cn.hanamizu.campushelp.entity.Student;
 import cn.hanamizu.campushelp.service.StudentService;
-import cn.hanamizu.campushelp.utils.MessageUtil;
+import cn.hanamizu.campushelp.utils.tools.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

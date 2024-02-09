@@ -1,4 +1,4 @@
-package cn.hanamizu.campushelp.utils;
+package cn.hanamizu.campushelp.utils.tools;
 
 import cn.hanamizu.campushelp.entity.User;
 import cn.hanamizu.campushelp.service.UserService;

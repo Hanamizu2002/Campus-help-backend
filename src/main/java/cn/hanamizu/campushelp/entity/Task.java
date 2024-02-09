@@ -28,6 +28,7 @@ public class Task {
     private String taskTitle;
     private String taskContext;
     private Integer state;
+    //todo 类型，任务发布审核
 
     @TableField(exist = false)
     private User publish;
