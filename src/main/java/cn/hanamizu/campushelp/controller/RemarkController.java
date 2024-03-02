@@ -1,9 +1,11 @@
 package cn.hanamizu.campushelp.controller;
 
 import cn.hanamizu.campushelp.entity.Remark;
+import cn.hanamizu.campushelp.service.ConfigService;
 import cn.hanamizu.campushelp.service.RemarkService;
 import cn.hanamizu.campushelp.utils.http.AjaxResult;
 import cn.hanamizu.campushelp.utils.pages.TableDataInfo;
+import cn.hanamizu.campushelp.utils.tools.PocketMoney;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +16,18 @@ import java.util.List;
 public class RemarkController extends BaseController {
     @Autowired
     private RemarkService remarkService;
+    @Autowired
+    private ConfigService configService;
+    @Autowired
+    private PocketMoney money;
 
     /**
      * 查询remark列表
      */
     @GetMapping("/list")
-    public TableDataInfo list(Remark Remark) {
+    public TableDataInfo list(Remark remark) {
         startPage();
-        List<Remark> list = remarkService.selectRemarkList(Remark);
+        List<Remark> list = remarkService.selectRemarkList(remark);
         return getDataTable(list);
     }
 
@@ -37,16 +43,20 @@ public class RemarkController extends BaseController {
      * 新增remark
      */
     @PostMapping
-    public AjaxResult add(@RequestBody Remark Remark) {
-        return toAjax(remarkService.insertRemark(Remark));
+    public AjaxResult add(@RequestBody Remark remark) {
+        if (remarkService.insertRemark(remark) > 1) {
+            money.transfer("coin=coin+", Double.parseDouble(configService.getValueByKey("CoinBack")), remark.getPublish().getStudentId());
+            return toAjax(true);
+        }
+        return toAjax(false);
     }
 
     /**
      * 修改remark
      */
     @PutMapping
-    public AjaxResult edit(@RequestBody Remark Remark) {
-        return toAjax(remarkService.updateRemark(Remark));
+    public AjaxResult edit(@RequestBody Remark remark) {
+        return toAjax(remarkService.updateRemark(remark));
     }
 
     /**

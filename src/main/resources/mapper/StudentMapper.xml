@@ -4,9 +4,63 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hanamizu.campushelp.mapper.StudentMapper">
 
-    <resultMap id="studentResultMap" type="cn.hanamizu.campushelp.entity.Student">
-<!--        todo 数据库-->
+
+    <resultMap type="cn.hanamizu.campushelp.entity.Student" id="StudentResult">
+        <id property="id" column="id"/>
+        <association property="name" column="name"/>
+        <association property="age" column="age"/>
     </resultMap>
 
+    <sql id="selectStudentVo">
+        select id, name, age
+        from student
+    </sql>
+
+    <select id="selectStudentList" resultType="cn.hanamizu.campushelp.entity.Student">
+        <include refid="selectStudentVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="age != null ">and age = #{age}</if>
+        </where>
+    </select>
+
+    <select id="selectStudentById" parameterType="Long" resultType="cn.hanamizu.campushelp.entity.Student">
+        <include refid="selectStudentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertStudent" useGeneratedKeys="true" keyProperty="id">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="age != null">age,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="age != null">#{age},</if>
+        </trim>
+    </insert>
+
+    <update id="updateStudent">
+        update student
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="age != null">age = #{age},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudentById" parameterType="Long">
+        delete
+        from student
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteStudentByIds" parameterType="String">
+        delete from student where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

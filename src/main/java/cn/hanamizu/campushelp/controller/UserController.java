@@ -39,7 +39,7 @@ public class UserController {
     }
 
     // 获取全部User
-    @GetMapping("/getUsers")
+    @GetMapping()
     public Map<String, Object> users(String studentId, String username) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         if (studentId != null) {
@@ -97,13 +97,13 @@ public class UserController {
 
     // 零钱转入
     @PutMapping("rollIn")
-    public Map<String, Object> rollIn(String studentId, Double balance) {
+    public Map<String, Object> rollIn(String studentId, Double balance, Long coin) {
         return money.transfer("balance=balance+", balance, studentId);
     }
 
     // 零钱转出
     @PutMapping("rollOut")
-    public Map<String, Object> rollOut(String studentId, Double balance) {
+    public Map<String, Object> rollOut(String studentId, Double balance, Long coin) {
         return money.transfer("balance=balance-", balance, studentId);
     }
 }

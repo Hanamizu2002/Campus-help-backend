@@ -2,6 +2,7 @@ package cn.hanamizu.campushelp.controller;
 
 import cn.hanamizu.campushelp.entity.Task;
 import cn.hanamizu.campushelp.entity.User;
+import cn.hanamizu.campushelp.service.ConfigService;
 import cn.hanamizu.campushelp.service.TaskService;
 import cn.hanamizu.campushelp.service.UserService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +31,8 @@ public class TaskController {
     private MessageUtil messageUtil;
     @Autowired
     private PocketMoney money;
+    @Autowired
+    private ConfigService configService;
 
     // 获取当前登录user所在学校的任务
     @GetMapping
@@ -64,7 +69,6 @@ public class TaskController {
 
     // 获取发布和接受的task
     public List<Task> publishAndAcceptMethods(Long id, String field) {
-//         User user = (User) session.getAttribute("user");
         QueryWrapper<Task> wrapper = new QueryWrapper<>();
         wrapper.eq(field, id);
         return taskService.list(wrapper);
@@ -74,14 +78,12 @@ public class TaskController {
     @PostMapping
     public Map<String, Object> saveTask(Task task) {
         User user = userService.getById(task.getPublishId());
-//        // test 临时数据
-//        User user = userService.getById(13);
 
         if (user.getBalance() >= task.getReward()) {
-            boolean save = taskService.save(task);
-            if (save) {
-                money.transfer("balance=balance-", task.getReward(), user.getStudentId());
-            }
+            money.transfer("balance=balance-", task.getReward(), user.getStudentId());
+            task.setCoin(Double.parseDouble(configService.getValueByKey("CoinBack")) * task.getReward());
+            task.setReward(toNumTwo(Double.parseDouble(configService.getValueByKey("TakeCommission")) * task.getReward()));
+            taskService.save(task);
             return messageUtil.message(true, "发布成功", "", null);
         } else {
             return messageUtil.message(false, "error", "", null);
@@ -107,7 +109,7 @@ public class TaskController {
         UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
         wrapper.setSql("accept_user_id=null")
                 .setSql("order_time=null")
-                .setSql("state=0")
+                .setSql("state=1")
                 .eq("id", id);
 
         boolean update = taskService.update(wrapper);
@@ -126,7 +128,7 @@ public class TaskController {
         UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
         wrapper.setSql("accept_user_id=" + acceptId)
                 .setSql("order_time=now()")
-                .setSql("state=1")
+                .setSql("state=2")
                 .eq("id", id);
         boolean b = taskService.update(wrapper);
 
@@ -142,7 +144,7 @@ public class TaskController {
 
         UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
         wrapper.setSql("end_time=now()")
-                .setSql("state=2")
+                .setSql("state=3")
                 .eq("id", id);
         boolean b = taskService.update(wrapper);
 
@@ -150,8 +152,23 @@ public class TaskController {
             Task task = taskService.getById(id);
             if (task != null) {
                 money.transfer("balance=balance+", task.getReward(), task.getAccept().getStudentId());
+                money.transfer("coin=coin+", task.getCoin(), task.getAccept().getStudentId());
             }
             return messageUtil.message(true, "完成任务", "", null);
+        }
+        return messageUtil.message(false, "failed", "", null);
+    }
+
+    @PutMapping("/pass/{id}")
+    public Map<String, Object> passTask(@PathVariable Long id) {
+        UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("pass_time=now()")
+                .setSql("state=1")
+                .eq("id", id);
+        boolean b = taskService.update(wrapper);
+
+        if (b) {
+            return messageUtil.message(true, "通过审核", "", null);
         }
         return messageUtil.message(false, "failed", "", null);
     }
@@ -177,5 +194,10 @@ public class TaskController {
         return messageUtil.message(false, "no permission", "", null);
     }
 
+    private Double toNumTwo(Double d) {
+        BigDecimal b = new BigDecimal(d);
+        d = b.setScale(2, RoundingMode.HALF_UP).doubleValue();
+        return d;
+    }
 }
 

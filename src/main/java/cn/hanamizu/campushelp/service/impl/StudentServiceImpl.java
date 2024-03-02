@@ -1,32 +1,39 @@
 package cn.hanamizu.campushelp.service.impl;
 
 import cn.hanamizu.campushelp.entity.Student;
+import cn.hanamizu.campushelp.mapper.StudentMapper;
 import cn.hanamizu.campushelp.service.StudentService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
+    @Resource
+    private StudentMapper studentMapper;
+
     /**
-     * TODO 通过id查询
+     * 通过id查询
+     *
      * @param id 学生管理主键
      * @return 查询到的学生管理实体
      */
     @Override
     public Student selectStudentById(Long id) {
-        //todo mapper
-        return null;
+        return studentMapper.selectStudentById(id);
     }
 
     /**
      * TODO 查询列表
+     *
      * @param student 学生管理
      * @return 学生管理列表
      */
     @Override
     public List<Student> selectStudentList(Student student) {
-        return null;
+        return studentMapper.selectStudentList(student);
     }
 
     /**
@@ -37,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public boolean insertStudent(Student student) {
-        return false;
+        return studentMapper.insertStudent(student);
     }
 
     /**
@@ -48,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public boolean updateStudent(Student student) {
-        return false;
+        return updateStudent(student);
     }
 
     /**
@@ -59,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public boolean deleteStudentByIds(Long[] ids) {
-        return false;
+        return studentMapper.deleteStudentByIds(ids);
     }
 
     /**
@@ -70,6 +77,6 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public boolean deleteSxcStudentById(Long id) {
-        return false;
+        return studentMapper.deleteStudentById(id);
     }
 }

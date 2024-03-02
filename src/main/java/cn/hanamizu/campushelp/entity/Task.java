@@ -22,14 +22,15 @@ public class Task {
     @TableField(value = "user_school_id")
     private Long schoolId;
     private Double reward;
+    private Double coin;
     private Date createTime;
+    private Date passTime;
     private Date orderTime;
     private Date endTime;
     private String taskTitle;
     private String taskContext;
     private Integer state;
-    //todo 类型，任务发布审核
-
+    //通过0-发布1-服务2-完成3
     @TableField(exist = false)
     private User publish;
     @TableField(exist = false)

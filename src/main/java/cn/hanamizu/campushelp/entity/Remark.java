@@ -1,5 +1,6 @@
 package cn.hanamizu.campushelp.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -39,4 +40,7 @@ public class Remark extends BaseEntity{
      * 评价人id
      */
     private Long publishId;
+
+    @TableField(exist = false)
+    private User publish;
 }

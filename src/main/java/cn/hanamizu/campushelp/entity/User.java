@@ -27,6 +27,7 @@ public class User {
     private String username;
     private Date createTime;
     private Double balance;
+    private Double coin;
     private Integer state;
 
     @TableField(exist = false)
