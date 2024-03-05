@@ -5,4 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 public interface ConfigService extends IService<Config> {
     String getValueByKey(String key);
+
+    String updateByKey(String key, String value);
 }

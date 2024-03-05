@@ -39,33 +39,14 @@ public class ConfigController {
         return messageUtil.message(false, "配置不存在", null, null);
     }
 
-    // 新增配置项
-    @PostMapping("/add")
-    public Map<String, Object> addConfig(Config config) {
-        boolean save = configService.save(config);
-        if (save) {
-            return messageUtil.message(true, "新增配置成功", null, null);
-        }
-        return messageUtil.message(false, "新增配置失败", null, null);
-    }
-
     // 修改配置项
-    @PostMapping("/update")
+    @PutMapping
     public Map<String, Object> updateConfig(Config config) {
-        boolean update = configService.updateById(config);
-        if (update) {
+        String update = configService.updateByKey(config.getKey(), config.getValue());
+        System.out.println(update);
+        if (update != null) {
             return messageUtil.message(true, "更新配置成功", null, null);
         }
         return messageUtil.message(false, "更新配置失败", null, null);
-    }
-
-    // 删除配置项
-    @DeleteMapping("/{key}")
-    public Map<String, Object> deleteConfig(@PathVariable String key) {
-        boolean remove = configService.removeById(key);
-        if (remove) {
-            return messageUtil.message(true, "删除配置成功", null, null);
-        }
-        return messageUtil.message(false, "删除配置失败", null, null);
     }
 }

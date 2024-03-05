@@ -15,5 +15,9 @@
         SELECT `value` FROM config WHERE (`key` = #{key})
     </select>
 
+    <select id="updateByKey" parameterType="java.lang.String" resultType="java.lang.String">
+        UPDATE config SET `value` = #{value} WHERE (`key` = #{key})
+    </select>
+
 
 </mapper>

@@ -5,4 +5,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 public interface ConfigMapper extends BaseMapper<Config> {
     String getValueByKey(String key);
+
+    String updateByKey(String key, String value);
 }

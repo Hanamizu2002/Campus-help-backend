@@ -16,4 +16,10 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> impleme
     public String getValueByKey(String key) {
         return configMapper.getValueByKey(key);
     }
+
+    @Override
+    public String updateByKey(String key, String value) {
+        return configMapper.updateByKey(key, value);
+    }
+
 }
