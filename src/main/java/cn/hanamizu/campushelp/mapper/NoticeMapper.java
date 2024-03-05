@@ -1,9 +1,11 @@
 package cn.hanamizu.campushelp.mapper;
 
 import cn.hanamizu.campushelp.entity.Notice;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface NoticeMapper {
     /**
      * 查询通知公告公告
