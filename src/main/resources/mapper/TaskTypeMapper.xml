@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hanamizu.campushelp.mapper.TaskTypeMapper">
+
+    <resultMap id="taskTypeResultMap" type="cn.hanamizu.campushelp.entity.TaskType">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <!-- Select a single task type by ID -->
+    <select id="selectById" parameterType="int" resultMap="taskTypeResultMap">
+        SELECT *
+        FROM task_type
+        WHERE id = #{id}
+    </select>
+
+    <!-- List all task types -->
+    <select id="selectAll" resultMap="taskTypeResultMap">
+        SELECT *
+        FROM task_type
+    </select>
+
+</mapper>

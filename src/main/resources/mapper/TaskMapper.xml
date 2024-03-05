@@ -8,6 +8,7 @@
         <association property="school" column="user_school_id" select="findEntitySchoolById"/>
         <association property="accept" column="accept_user_id" select="findUserById"/>
         <association property="publish" column="publish_user_id" select="findUserById"/>
+        <association property="taskType" column="task_type_id" select="findTypeById"/>
     </resultMap>
 
     <select id="findEntitySchoolById" resultType="cn.hanamizu.campushelp.entity.School">
@@ -19,6 +20,12 @@
     <select id="findUserById" resultMap="cn.hanamizu.campushelp.mapper.UserMapper.userResultMap">
         select *
         from user
+        where id = #{id}
+    </select>
+
+    <select id="findTypeById" resultMap="cn.hanamizu.campushelp.mapper.TaskTypeMapper.taskTypeResultMap">
+        select *
+        from task_type
         where id = #{id}
     </select>
 </mapper>

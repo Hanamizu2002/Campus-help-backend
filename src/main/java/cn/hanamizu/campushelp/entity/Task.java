@@ -21,6 +21,8 @@ public class Task {
     private Long acceptId;
     @TableField(value = "user_school_id")
     private Long schoolId;
+    @TableField(value = "task_type_id")
+    private Long taskTypeId;
     private Double reward;
     private Double coin;
     private Date createTime;
@@ -37,4 +39,6 @@ public class Task {
     private User accept;
     @TableField(exist = false)
     private School school;
+    @TableField(exist = false)
+    private TaskType taskType;
 }
