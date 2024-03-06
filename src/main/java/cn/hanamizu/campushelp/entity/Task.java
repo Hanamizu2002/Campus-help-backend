@@ -31,6 +31,7 @@ public class Task {
     private Date endTime;
     private String taskTitle;
     private String taskContext;
+    private String image;
     private Integer state;
     //通过0-发布1-服务2-完成3
     @TableField(exist = false)
