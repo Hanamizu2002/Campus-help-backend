@@ -1,11 +1,14 @@
 package cn.hanamizu.campushelp.controller;
 
 import cn.hanamizu.campushelp.entity.Remark;
+import cn.hanamizu.campushelp.entity.Task;
 import cn.hanamizu.campushelp.service.ConfigService;
 import cn.hanamizu.campushelp.service.RemarkService;
+import cn.hanamizu.campushelp.service.TaskService;
 import cn.hanamizu.campushelp.utils.http.AjaxResult;
 import cn.hanamizu.campushelp.utils.pages.TableDataInfo;
 import cn.hanamizu.campushelp.utils.tools.PocketMoney;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,8 @@ public class RemarkController extends BaseController {
     private ConfigService configService;
     @Autowired
     private PocketMoney money;
+    @Autowired
+    private TaskService taskService;
 
     /**
      * 查询remark列表
@@ -44,9 +49,17 @@ public class RemarkController extends BaseController {
      */
     @PostMapping
     public AjaxResult add(@RequestBody Remark remark) {
-        if (remarkService.insertRemark(remark) > 1) {
-            money.transfer("coin=coin+", Double.parseDouble(configService.getValueByKey("CoinBack")), remark.getPublish().getStudentId());
-            return toAjax(true);
+        if (taskService.getById(remark.getTaskId()).getState() == 4)
+            return toAjax(false);
+        UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=4")
+                .eq("id", remark.getTaskId());
+        if (taskService.update(wrapper)) {
+            if (remarkService.insertRemark(remark) > 1) {
+                money.transfer("coin=coin+", Double.parseDouble(configService.getValueByKey("CoinBack")), remark.getPublish().getStudentId());
+                return toAjax(true);
+            }
+            return toAjax(false);
         }
         return toAjax(false);
     }
