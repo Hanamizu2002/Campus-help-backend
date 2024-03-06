@@ -18,13 +18,13 @@ public class PocketMoney {
     /**
      * 零钱通用方法
      * @param condition 计算条件
-     * @param balance 金额
+     * @param money 金额
      * @param studentId 学生id
      * @return 结果
      */
-    public Map<String, Object> transfer(String condition, Double balance, String studentId) {
+    public Map<String, Object> transfer(String condition, Double money, String studentId) {
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
-        wrapper.setSql(condition + balance)
+        wrapper.setSql(condition + money)
                 .eq("student_id", studentId);
         boolean update = userService.update(wrapper);
         if (update) {
