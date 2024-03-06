@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hanamizu.campushelp.mapper.ExchangeRecordMapper">
+    <resultMap id="exchangeRecordResultMap" type="cn.hanamizu.campushelp.entity.ExchangeRecord">
+        <id column="id" property="id"/>
+        <association property="product" column="productId" select="findProductById"/>
+    </resultMap>
+
+    <select id="findProductById" resultMap="cn.hanamizu.campushelp.mapper.ProductMapper.productResultMap">
+        select *
+        from product
+        where id = #{id}
+    </select>
+</mapper>
