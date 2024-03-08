@@ -3,6 +3,8 @@ package cn.hanamizu.campushelp.controller;
 import cn.hanamizu.campushelp.entity.Product;
 import cn.hanamizu.campushelp.service.ProductService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,10 @@ public class ProductController {
     // 获取全部Product
     @GetMapping
     public Map<String, Object> products() {
-        List<Product> products = productService.list();
-        return message.message(true, "请求成功", "product", products);
+        QueryWrapper<Product> wrapper = new QueryWrapper<>();
+        wrapper.ne("state", 0);
+        return message.message(true, "请求成功", "product", productService.list(wrapper));
+
     }
 
     // 根据id获取Product
@@ -47,8 +51,10 @@ public class ProductController {
     // 删除Product
     @DeleteMapping("/{id}")
     public Map<String, Object> delProduct(@PathVariable Integer id) {
-        boolean remove = productService.removeById(id);
-        if (remove) {
+        UpdateWrapper<Product> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=0")
+                .eq("id", id);
+        if (productService.update(wrapper)) {
             return message.message(true, "删除成功", "", null);
         }
         return message.message(false, "删除失败", "", null);

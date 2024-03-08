@@ -3,7 +3,6 @@ package cn.hanamizu.campushelp.controller;
 import cn.hanamizu.campushelp.entity.School;
 import cn.hanamizu.campushelp.service.SchoolService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

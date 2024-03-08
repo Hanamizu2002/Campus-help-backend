@@ -16,4 +16,5 @@ public class Product {
     private Integer cost;
     private String image;
     private Integer stock;
+    private Integer state;
 }
