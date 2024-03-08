@@ -8,6 +8,7 @@ import cn.hanamizu.campushelp.service.ProductService;
 import cn.hanamizu.campushelp.service.UserService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
 import cn.hanamizu.campushelp.utils.tools.PocketMoney;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,4 +84,18 @@ public class ExchangeRecordController {
         }
         return message.message(false, "更新失败", "", null);
     }
+
+    @PutMapping("/ship")
+    public Map<String, Object> putExchangeRecordState(ExchangeRecord exchangeRecord) {
+        UpdateWrapper<ExchangeRecord> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=1")
+                .eq("id", exchangeRecord.getId());
+        boolean b = exchangeRecordService.update(wrapper);
+
+        if (b) {
+            return message.message(true, "已发货", "", null);
+        }
+        return message.message(false, "failed", "", null);
+    }
+
 }

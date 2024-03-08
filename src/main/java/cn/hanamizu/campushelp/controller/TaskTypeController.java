@@ -3,6 +3,7 @@ package cn.hanamizu.campushelp.controller;
 import cn.hanamizu.campushelp.entity.TaskType;
 import cn.hanamizu.campushelp.service.TaskTypeService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class TaskTypeController {
     // 获取全部TaskType
     @GetMapping
     public Map<String, Object> taskTypes() {
-        List<TaskType> taskTypes = taskTypeService.list();
+        List<TaskType> taskTypes = taskTypeService.listActiveTaskTypes();
         return message.message(true, "请求成功", "taskType", taskTypes);
     }
 
@@ -49,8 +50,11 @@ public class TaskTypeController {
     // 删除TaskType
     @DeleteMapping("/{id}")
     public Map<String, Object> delTaskType(@PathVariable Integer id) {
-        boolean remove = taskTypeService.removeById(id);
-        if (remove) {
+        TaskType taskType = taskTypeService.getById(id);
+        UpdateWrapper<TaskType> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=0")
+                .eq("id", id);
+        if (taskTypeService.update(wrapper)) {
             return message.message(true, "删除任务类型成功", "", null);
         }
         return message.message(false, "删除任务类型失败", "", null);

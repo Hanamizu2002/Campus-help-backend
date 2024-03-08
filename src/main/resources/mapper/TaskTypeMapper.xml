@@ -22,4 +22,9 @@
         FROM task_type
     </select>
 
+    <select id="listActiveTaskTypes" resultMap="taskTypeResultMap">
+        SELECT *
+        FROM task_type
+        WHERE state=1
+    </select>
 </mapper>

@@ -11,6 +11,8 @@ import lombok.ToString;
 @TableName(resultMap = "taskTypeResultMap")
 public class TaskType {
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
+    // 0删除-1正常
+    private Integer state;
 }

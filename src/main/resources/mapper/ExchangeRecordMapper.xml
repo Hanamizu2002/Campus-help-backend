@@ -5,7 +5,7 @@
 <mapper namespace="cn.hanamizu.campushelp.mapper.ExchangeRecordMapper">
     <resultMap id="exchangeRecordResultMap" type="cn.hanamizu.campushelp.entity.ExchangeRecord">
         <id column="id" property="id"/>
-        <association property="product" column="productId" select="findProductById"/>
+        <association property="product" column="product_id" select="findProductById"/>
     </resultMap>
 
     <select id="findProductById" resultMap="cn.hanamizu.campushelp.mapper.ProductMapper.productResultMap">

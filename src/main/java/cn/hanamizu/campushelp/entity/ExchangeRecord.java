@@ -21,6 +21,7 @@ public class ExchangeRecord {
     private String name;
     private String phone;
     private LocalDateTime exchangeTime;
+    private Integer state;
     @TableField(exist = false)
     private Product product;
 }

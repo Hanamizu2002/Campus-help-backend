@@ -33,7 +33,7 @@ public class Task {
     private String taskContext;
     private String image;
     private Integer state;
-    //通过0-发布1-服务2-完成3
+    //通过0-发布1-服务2-完成3-评论4-删除1000
     @TableField(exist = false)
     private User publish;
     @TableField(exist = false)
