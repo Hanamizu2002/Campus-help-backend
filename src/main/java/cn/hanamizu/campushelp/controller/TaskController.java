@@ -40,7 +40,7 @@ public class TaskController {
         User user = userService.getById(id);
         if (user != null) {
             QueryWrapper<Task> wrapper = new QueryWrapper<>();
-            wrapper.eq("user_school_id", user.getSchool().getId());
+            wrapper.eq("user_school_id", user.getSchool().getId()).ne("state", 0);
 
             return messageUtil.message(true, "success", "task", taskService.list(wrapper));
         }
@@ -94,7 +94,6 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public Map<String, Object> delTask(@PathVariable Long id) {
         Task task = taskService.getById(id);
-        System.out.println(task);
         if (task != null) {
             taskService.removeById(id);
             money.transfer("balance=balance+", task.getReward(), task.getPublish().getStudentId());

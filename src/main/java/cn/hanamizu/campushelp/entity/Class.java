@@ -18,6 +18,7 @@ public class Class {
     private String name;
     private Integer schoolId;
     private Integer deptId;
+    private Integer state;
 
     @TableField(exist = false)
     private List<User> users;

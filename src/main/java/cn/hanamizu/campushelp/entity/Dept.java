@@ -18,6 +18,7 @@ public class Dept {
     private Long id;
     private String name;
     private Integer schoolId;
+    private Integer state;
 
     @TableField(exist = false)
     private List<Class> classes;

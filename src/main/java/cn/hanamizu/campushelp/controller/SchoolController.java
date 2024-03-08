@@ -3,6 +3,9 @@ package cn.hanamizu.campushelp.controller;
 import cn.hanamizu.campushelp.entity.School;
 import cn.hanamizu.campushelp.service.SchoolService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +23,9 @@ public class SchoolController {
     // 获取全部school
     @GetMapping
     public Map<String, Object> schools() {
-        List<School> schools = schoolService.list();
-        return message.message(true, "请求成功", "school", schools);
+        QueryWrapper<School> wrapper = new QueryWrapper<>();
+        wrapper.ne("state", 0);
+        return message.message(true, "请求成功", "school", schoolService.list(wrapper));
     }
 
     // 根据id获取school
@@ -45,8 +49,10 @@ public class SchoolController {
     // 删除school
     @DeleteMapping("/{id}")
     public Map<String, Object> delSchool(@PathVariable Long id) {
-        boolean remove = schoolService.removeById(id);
-        if (remove) {
+        UpdateWrapper<School> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=0")
+                .eq("id", id);
+        if (schoolService.update(wrapper)) {
             return message.message(true, "删除学校成功", "", null);
         }
         return message.message(false, "error,删除学校失败", "", null);

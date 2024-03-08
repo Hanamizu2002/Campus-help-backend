@@ -1,9 +1,12 @@
 package cn.hanamizu.campushelp.controller;
 
 import cn.hanamizu.campushelp.entity.Class;
+import cn.hanamizu.campushelp.entity.Dept;
+import cn.hanamizu.campushelp.entity.School;
 import cn.hanamizu.campushelp.service.ClassService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +24,9 @@ public class ClassController {
     // 获取全部class
     @GetMapping
     public Map<String, Object> myClass() {
-        List<Class> c = classService.list();
-        return message.message(true, "请求成功", "class", c);
+        QueryWrapper<Class> wrapper = new QueryWrapper<>();
+        wrapper.ne("state", 0);
+        return message.message(true, "请求成功", "class", classService.list(wrapper));
     }
 
     // 根据id获取myClass
@@ -52,8 +56,10 @@ public class ClassController {
     // 删除
     @DeleteMapping("/{id}")
     public Map<String, Object> delClass(@PathVariable Long id) {
-        boolean remove = classService.removeById(id);
-        if (remove) {
+        UpdateWrapper<Class> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=0")
+                .eq("id", id);
+        if (classService.update(wrapper)) {
             return message.message(true, "删除成功", "", null);
         }
         return message.message(true, "error, 删除失败", "", null);

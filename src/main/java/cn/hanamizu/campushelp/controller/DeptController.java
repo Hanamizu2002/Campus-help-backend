@@ -1,9 +1,12 @@
 package cn.hanamizu.campushelp.controller;
 
 import cn.hanamizu.campushelp.entity.Dept;
+import cn.hanamizu.campushelp.entity.School;
+import cn.hanamizu.campushelp.entity.TaskType;
 import cn.hanamizu.campushelp.service.DeptService;
 import cn.hanamizu.campushelp.utils.tools.MessageUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +24,16 @@ public class DeptController {
     // 获取全部dept
     @GetMapping
     public Map<String, Object> depts() {
-        List<Dept> depts = deptService.list();
-        return message.message(true, "请求成功", "dept", depts);
+        QueryWrapper<Dept> wrapper = new QueryWrapper<>();
+        wrapper.ne("state", 0);
+        return message.message(true, "请求成功", "school", deptService.list(wrapper));
+    }
+
+    @GetMapping("/school/{id}")
+    public Map<String, Object> deptsBySchool(@PathVariable Long id) {
+        QueryWrapper<Dept> wrapper = new QueryWrapper<>();
+        wrapper.eq("school_id", id);
+        return message.message(true, "请求成功", "dept", deptService.list(wrapper));
     }
 
     // 根据id获取dept
@@ -51,8 +62,10 @@ public class DeptController {
     // 删除
     @DeleteMapping("/{id}")
     public Map<String, Object> delDept(@PathVariable Long id) {
-        boolean remove = deptService.removeById(id);
-        if (remove) {
+        UpdateWrapper<Dept> wrapper = new UpdateWrapper<>();
+        wrapper.setSql("state=0")
+                .eq("id", id);
+        if (deptService.update(wrapper)) {
             return message.message(true, "删除成功", "", null);
         }
         return message.message(true, "error, 删除失败", "", null);

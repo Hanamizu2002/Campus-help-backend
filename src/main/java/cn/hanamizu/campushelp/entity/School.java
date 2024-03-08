@@ -16,6 +16,7 @@ public class School {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private String name;
+    private Integer state;
 
     @TableField(exist = false)
     private List<Dept> depts;
