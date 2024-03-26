@@ -15,7 +15,7 @@ import java.io.IOException;
 public class COSUtil {
 
     public static PutObjectResult uploadFile(MultipartFile multipartFile, String bucketName, String key) throws IOException {
-        COSCredentials cred = new BasicCOSCredentials("AKIDxkMkupW1HJ6jSxDFBtMlwtc6MN9h0EDy", "Zu0sVu4zPjLlxwhFZfZFhutyqoaaMtBE");
+        COSCredentials cred = new BasicCOSCredentials("", "");
         ClientConfig clientConfig = new ClientConfig(new Region("ap-shanghai"));
         COSClient cosClient = new COSClient(cred, clientConfig);
 
