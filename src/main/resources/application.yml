@@ -26,4 +26,8 @@ spring:
 logging:
   level:
     cn.hanamizu.campushelp.mapper: debug
+cos:
+  secretId: your-secret-id
+  secretKey: your-secret-key
+  region: ap-shanghai
 

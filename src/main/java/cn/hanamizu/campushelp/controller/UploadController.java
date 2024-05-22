@@ -1,5 +1,6 @@
 package cn.hanamizu.campushelp.controller;
 
+import cn.hanamizu.campushelp.common.config.COSConfig;
 import cn.hanamizu.campushelp.utils.http.AjaxResult;
 import com.qcloud.cos.model.PutObjectResult;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/upload")
 public class UploadController extends BaseController {
+
+    private static COSConfig cosConfig;
 
     @PostMapping
     public ResponseEntity<AjaxResult> uploadFile(@RequestParam("file") MultipartFile file) {
