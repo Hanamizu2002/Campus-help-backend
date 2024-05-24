@@ -4,10 +4,12 @@
 
 ## 先决条件
 
-在开始之前，请确保你已经在本地安装了以下工具：
+在开始之前，请确保你已经安装或部署了以下软件：
 
 - Docker
 - Git
+- MySQL
+- Tencent COS
 
 ## 构建Docker镜像
 
@@ -18,7 +20,22 @@
    cd Campus-help-backend
    ```
 
-2. 构建Docker镜像：
+2. 修改application.yml文件，将数据库连接信息修改为你自己的数据库信息。
+   ```yaml
+    url: jdbc:mysql://localhost:3306/campus_help?characterEcoding=utf-8&serverTimezone=UTC
+    username: root
+    password: MQTG123123
+   ```
+
+3. 填写cos配置
+   ```yaml
+   cos:
+   secretId: your-secret-id
+   secretKey: your-secret-key
+   region: ap-shanghai
+   ```
+
+4. 构建Docker镜像：
 
    ```sh
    docker build -t hanamizu/campushelpbackend:latest .
